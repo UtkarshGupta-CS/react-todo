@@ -1,4 +1,5 @@
 import React from 'react';
+import CreateTodo from './create-todo';
 import TodoList from './todo-list';
 
 const todo = [
@@ -13,20 +14,29 @@ const todo = [
 ];
 
 export default class App extends React.Component {
-   
-   constructor(props){
+
+   constructor(props) {
       super(props);
       this.state = {
          todo: todo
       }
    }
-   
-   render(){
+
+   render() {
       return (
          <div>
             <h1>React ToDo Application</h1>
-            <TodoList todo = {this.state.todo} />
+            <CreateTodo createTask={this.createTask.bind(this)} />
+            <TodoList todo={this.state.todo} />
          </div>
-      ); 
+      );
+   }
+
+   createTask(task) {
+      this.state.todo.push({
+         task,
+         isCompleted: false
+      });
+      this.setState({ todo: this.state.todo });
    }
 }

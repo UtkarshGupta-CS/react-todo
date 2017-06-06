@@ -4,17 +4,17 @@ import TodoListHeader from './todo-list-header';
 import TodoListItem from './todo-list-item';
 
 export default class TodoList extends React.Component {
-   
-   renderItems(){
+
+   renderItems() {
       return _.map(this.props.todo, (todo, index) => <TodoListItem key={index} {...todo} />);
    }
-  
-   render(){
+
+   render() {
       return (
          <table>
             <TodoListHeader />
-            <tr>{ this.renderItems() }</tr>
+            {this.renderItems()}
          </table>
-      ); 
+      );
    }
 }
