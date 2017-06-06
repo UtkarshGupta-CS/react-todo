@@ -14,7 +14,7 @@ export default class TodoListItem extends React.Component {
       if (this.state.isEditing) {
          return (
             <td>
-               <button>Save</button>
+               <button onClick={this.onSaveClick.bind(this)}>Save</button>
                <button onClick={this.onCancleClick.bind(this)}>Cancel</button>
             </td>
          );
@@ -27,10 +27,32 @@ export default class TodoListItem extends React.Component {
       );
    }
 
+   renderTaskSection() {
+      const { task, isCompleted } = this.props;
+
+      const taskStyle = {
+         color: isCompleted ? 'green' : 'red',
+         cursor: 'pointer'
+      };
+      if(this.state.isEditing) {
+         return (
+            <td>
+               <form onSubmit={this.onSaveClick.bind(this)}>
+                  <input type="text" defaultValue={task} ref="editInput"/>
+               </form>
+            </td>
+         )
+      }
+      return (
+         <td onClick={this.props.toggleTask.bind(this, task)}
+            style={taskStyle} >{task}</td>
+      );
+   }
+
    render() {
       return (
          <tr>
-            <td>{this.props.task}</td>
+            {this.renderTaskSection()}
             {this.renderActionSection()}
          </tr>
       )
@@ -40,7 +62,16 @@ export default class TodoListItem extends React.Component {
       this.setState({ isEditing: true });
    }
 
-   onCancleClick(){
+   onCancleClick() {
       this.setState({ isEditing: false });
+   }
+
+   onSaveClick(event) {
+      event.preventDefault();
+
+      const oldTask = this.props.task;
+      const newTask = this.refs.editInput.value;
+      this.props.saveTask(oldTask, newTask);
+      this.setState({ isEditing: false })
    }
 }
