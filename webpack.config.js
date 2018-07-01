@@ -18,7 +18,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["react", "es2015"],
+              presets: ["react", "es2015", "stage-2"],
               cacheDirectory: true,
               plugins: ["react-hot-loader/babel"]
             }
