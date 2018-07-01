@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
+import styled from 'styled-components';
+
 import CreateTodo from './create-todo';
 import TodoList from './todo-list';
 
@@ -25,14 +27,14 @@ export default class App extends React.Component {
 
    render() {
       return (
-         <div>
+         <ContainerDiv>
             <h1>React ToDo Application</h1>
             <CreateTodo todo={this.state.todo} createTask={this.createTask.bind(this)} />
             <TodoList todo={this.state.todo}
                toggleTask={this.toggleTask.bind(this)}
                saveTask={this.saveTask.bind(this)}
             />
-         </div>
+         </ContainerDiv>
       );
    }
 
@@ -56,3 +58,9 @@ export default class App extends React.Component {
       this.setState({ todo: this.state.todo });
    }
 }
+
+const ContainerDiv = styled.div`
+  width: 100%;
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+`
