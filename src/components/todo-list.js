@@ -26,6 +26,5 @@ export default class TodoList extends React.Component {
 
 const TodoListTable = styled.table`
   margin: 0 auto;
-  margin-top: 2em;
   text-align: center;
 `
