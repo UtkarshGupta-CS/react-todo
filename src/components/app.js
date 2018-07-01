@@ -2,61 +2,78 @@ import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
-import CreateTodo from "./create-todo";
-import TodoList from "./todo-list";
-
-const todo = [
-  {
-    task: "complete React tutorial",
-    isCompleted: false
-  },
-  {
-    task: "eat dinner",
-    isCompleted: true
-  }
-];
+import CreateTodo from "./CreateTodo";
+import TodoList from "./TodoList";
+import AppContext from "./AppContext";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todo: todo
+      todo: []
     };
   }
 
   render() {
     return (
-      <ContainerDiv>
-        {/* <h1>React ToDo Application</h1> */}
-        <LogoImage src="../../assets/logo.png" alt="React TODO" />
-        <CreateTodo todo={this.state.todo} createTask={this.createTask} />
-        <TodoList
-          todo={this.state.todo}
-          toggleTask={this.toggleTask}
-          saveTask={this.saveTask}
-        />
-      </ContainerDiv>
+      <AppContext.Provider value={this.state}>
+        <ContainerDiv>
+          <LogoImage src="../../assets/logo.png" alt="React TODO" />
+          <CreateTodo createTask={this.createTask} />
+          <TodoList
+            toggleTask={this.toggleTask}
+            updateTask={this.updateTask}
+            deleteTask={this.deleteTask}
+          />
+        </ContainerDiv>
+      </AppContext.Provider>
     );
   }
 
-  toggleTask = task => {
-    const foundTodo = _.find(this.state.todo, todo => todo.task === task);
-    foundTodo.isCompleted = !foundTodo.isCompleted;
-    this.setState({ todo: this.state.todo });
+  toggleTask = (task, taskIndex) => {
+    const toggledTodos = this.state.todo.map((todo, index) => {
+      if (index === taskIndex) {
+        todo.isCompleted = !todo.isCompleted;
+      }
+      return todo;
+    });
+    this.setState({
+      todo: toggledTodos
+    });
   };
 
   createTask = task => {
-    this.state.todo.push({
-      task,
-      isCompleted: false
+    this.setState({
+      todo: [
+        ...this.state.todo,
+        {
+          description: task,
+          isCompleted: false
+        }
+      ]
     });
-    this.setState({ todo: this.state.todo });
   };
 
-  saveTask = (oldTask, newTask) => {
-    const foundTodo = _.find(this.state.todo, todo => todo.task === oldTask);
-    foundTodo.task = newTask;
-    this.setState({ todo: this.state.todo });
+  updateTask = (newTask, taskIndex) => {
+    const updatedTodos = this.state.todo.map((todo, index) => {
+      if (index === taskIndex) {
+        todo.description = newTask.description;
+      }
+      return todo;
+    });
+    this.setState({
+      todo: updatedTodos
+    });
+  };
+
+  deleteTask = (task, taskIndex) => {
+    const remainingTodos = this.state.todo;
+    if (taskIndex > -1) {
+      remainingTodos.splice(taskIndex, 1);
+    }
+    this.setState({
+      todo: remainingTodos
+    });
   };
 }
 

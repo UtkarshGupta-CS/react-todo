@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
-  devtool: "inline-source-map",
+  devtool: "source-map",
   entry: ["./src"],
   output: {
     path: path.join(__dirname, "public"),
@@ -28,15 +28,15 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
-          'file-loader',
+          "file-loader",
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-            },
-          },
-        ],
+              disable: true // webpack@2.x and newer
+            }
+          }
+        ]
       }
     ]
   },
