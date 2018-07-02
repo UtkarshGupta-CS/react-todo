@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Todo component renders the todo correctly renders correctly 1`] = `
+<div
+  className="sc-EHOje ezyMVi"
+>
+  <img
+    alt="React TODO"
+    className="sc-bZQynM jBlHCL"
+    src="../../assets/logo.png"
+  />
+  <div
+    className="sc-bdVaJa kTrVIl"
+  >
+    <input
+      className="sc-bwzfXH fAHDEt"
+      onChange={[Function]}
+      placeholder="What needs to be done?"
+      type="text"
+      value=""
+    />
+    <button
+      className="sc-htpNat kOKcXe"
+      onClick={[Function]}
+    >
+      Create
+    </button>
+  </div>
+  <table
+    className="sc-ifAKCX jWxRiD"
+  >
+    <tbody />
+  </table>
+  <div
+    className="sc-bxivhb IDrsk"
+  >
+    <ul>
+      <li>
+        "Each Todo list item has two state.
+         
+        <span
+          style={
+            Object {
+              "color": "green",
+            }
+          }
+        >
+           Green
+        </span>
+        (Completed) and
+        <span
+          style={
+            Object {
+              "color": "red",
+            }
+          }
+        >
+           Red
+        </span>
+        (Incomplete)."
+      </li>
+      <li>
+        Click on Todo List Description to toggle the state of todo
+      </li>
+    </ul>
+  </div>
+</div>
+`;
