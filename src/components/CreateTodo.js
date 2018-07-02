@@ -1,12 +1,18 @@
 import React from "react";
 import AppContext from "./AppContext";
+import {
+  StyledButton,
+  TodoInput,
+  TodoInputForm
+} from "./CustomStyledComponent";
 
 export default class CreateTodo extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: null
+      error: null,
+      descriptionValue: ""
     };
   }
 
@@ -18,42 +24,40 @@ export default class CreateTodo extends React.Component {
     return <div style={{ color: "red" }}>{this.state.error}</div>;
   };
 
+  handleTodoDescChange = event => {
+    this.setState({ descriptionValue: event.target.value });
+  };
+
   render() {
     return (
-      <form onSubmit={this.handleCreate}>
-        <input
+      <TodoInputForm>
+        <TodoInput
           type="text"
-          placeholder="What do I need to do?"
-          ref="createInput"
+          placeholder="What needs to be done?"
+          value={this.state.descriptionValue}
+          onChange={event => this.handleTodoDescChange(event)}
         />
-        <button>Create</button>
+        <StyledButton onClick={() => this.handleCreate()}>Create</StyledButton>
         {this.renderError()}
-      </form>
+      </TodoInputForm>
     );
   }
 
-  handleCreate = event => {
-    event.preventDefault();
-
-    const { createInput } = this.refs;
-    const task = createInput.value;
-    const validateInput = this.validateInput(task);
+  handleCreate = () => {
+    const validateInput = this.validateInput(this.state.descriptionValue);
 
     if (validateInput) {
       this.setState({ error: validateInput });
       return;
     }
 
-    this.setState({ error: null });
-    this.props.createTask(task);
-    this.refs.createInput.value = "";
+    this.props.createTask(this.state.descriptionValue);
+    this.setState({ error: null, descriptionValue: "" });
   };
 
   validateInput = task => {
     if (!task) {
       return "Please enter the task";
-    } else if (_.find(this.state.todo, todo => todo.task === task)) {
-      return "Task already exist";
     }
     return null;
   };

@@ -1,9 +1,9 @@
-import _ from "lodash";
 import React from "react";
 import styled from "styled-components";
 
 import CreateTodo from "./CreateTodo";
 import TodoList from "./TodoList";
+import TodoListHelp from "./TodoListHelp";
 import AppContext from "./AppContext";
 
 export default class App extends React.Component {
@@ -25,6 +25,7 @@ export default class App extends React.Component {
             updateTask={this.updateTask}
             deleteTask={this.deleteTask}
           />
+          <TodoListHelp />
         </ContainerDiv>
       </AppContext.Provider>
     );
@@ -78,18 +79,14 @@ export default class App extends React.Component {
 }
 
 const ContainerDiv = styled.div`
-  width: 100%;
-  text-align: center;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background: papayawhip no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
   min-height: 767px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const LogoImage = styled.img`
-  height: 25%;
-  width: 25%;
+  height: 40%;
+  width: 40%;
 `;

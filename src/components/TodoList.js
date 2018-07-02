@@ -2,21 +2,26 @@ import React from "react";
 import styled from "styled-components";
 
 import AppContext from "./AppContext";
-import TodoListHeader from "./TodoListHeader";
 import TodoListItem from "./TodoListItem";
 
 export default class TodoList extends React.Component {
   render() {
     return (
       <TodoListTable>
-        <TodoListHeader />
-        <AppContext.Consumer>
-          {val =>
-            val.todo.map((todo, index) => (
-              <TodoListItem index={index} todo={todo} {...this.props} />
-            ))
-          }
-        </AppContext.Consumer>
+        <tbody>
+          <AppContext.Consumer>
+            {val =>
+              val.todo.map((todo, index) => (
+                <TodoListItem
+                  key={index}
+                  index={index}
+                  todo={todo}
+                  {...this.props}
+                />
+              ))
+            }
+          </AppContext.Consumer>
+        </tbody>
       </TodoListTable>
     );
   }

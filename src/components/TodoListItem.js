@@ -1,11 +1,17 @@
 import React from "react";
-
+import {
+  StyledButton,
+  TodoInput,
+  TodoInputForm
+} from "./CustomStyledComponent";
 export default class TodoListItem extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isEditing: false
+      isEditing: false,
+      changedDescriptionValue:
+        props.todo && props.todo.description ? props.todo.description : ""
     };
   }
 
@@ -14,10 +20,10 @@ export default class TodoListItem extends React.Component {
       return (
         <React.Fragment>
           <td>
-            <button onClick={this.onSaveClick}>Save</button>
+            <StyledButton onClick={this.onSaveClick}>Save</StyledButton>
           </td>
           <td>
-            <button onClick={this.onCancleClick}>Cancel</button>
+            <StyledButton onClick={this.onCancleClick}>Cancel</StyledButton>
           </td>
         </React.Fragment>
       );
@@ -25,15 +31,19 @@ export default class TodoListItem extends React.Component {
     return (
       <React.Fragment>
         <td>
-          <button onClick={this.onEditClick}>Edit</button>
+          <StyledButton onClick={this.onEditClick}>Edit</StyledButton>
         </td>
         <td>
-          <button onClick={() => this.props.deleteTask(todo, index)}>
+          <StyledButton onClick={() => this.props.deleteTask(todo, index)}>
             Delete
-          </button>
+          </StyledButton>
         </td>
       </React.Fragment>
     );
+  };
+
+  handleTodoDescChange = event => {
+    this.setState({ changedDescriptionValue: event.target.value });
   };
 
   renderTaskSection = () => {
@@ -47,13 +57,13 @@ export default class TodoListItem extends React.Component {
       return (
         <React.Fragment>
           <td>
-            <form onSubmit={this.onSaveClick}>
-              <input
+            <TodoInputForm>
+              <TodoInput
                 type="text"
-                defaultValue={todo && todo.description ? todo.description : ""}
-                ref="editInput"
+                value={this.state.changedDescriptionValue}
+                onChange={event => this.handleTodoDescChange(event)}
               />
-            </form>
+            </TodoInputForm>
           </td>
           {this.renderActionSection(todo, index)}
         </React.Fragment>
@@ -84,8 +94,7 @@ export default class TodoListItem extends React.Component {
     this.setState({ isEditing: false });
   };
 
-  onSaveClick = event => {
-    event.preventDefault();
+  onSaveClick = () => {
     const {
       props: { todo, updateTask, index }
     } = this;
@@ -93,7 +102,7 @@ export default class TodoListItem extends React.Component {
     updateTask(
       {
         isCompleted: todo.isCompleted,
-        description: this.refs.editInput.value
+        description: this.state.changedDescriptionValue
       },
       index
     );
